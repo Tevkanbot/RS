@@ -1,8 +1,16 @@
-from serial import Board
-bo = Board(port = "COM3")
+#default classes
 
-bo.move_to(input())
+#imported classes
 
-bo.read()
+#custom classes
+from connections.serial import Board
+def main():
+    while True:
+        bo = Board(port = "COM3")
 
-bo.end()
+        bo.move_to(input())
+
+        bo.read()
+
+if __name__ == "__main__":
+    main()
