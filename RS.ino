@@ -7,7 +7,6 @@ void setup() {
 void loop() {
   if (Serial.available()) {
     String str = Serial.readString();
-    Serial.println("~~~")
-    Serial.print(str);
+    Serial.println(str);
   }
 }

@@ -1,24 +1,41 @@
-#default classes
-import serial as sr
+#python classes
+import serial
 
 #imported classes
 
 #custom classes
 class Board:
-    def __init__(self, port):
-        self.port = port
+
+    def find_arduino_uno():
+        ports = list(serial.tools.list_ports.comports())
+        arduino_port = None
+
+        for port in ports:
+            if "Arduino Uno" in port.description or "VID:PID=2341:0043" in port.hwid:
+                arduino_port = port.device
+        
+        if arduino_port == None:
+            raise ConnectionError("Arduino is not conected")
+        
+        return arduino_port
+    
+    def __init__(self):
+
+        self.port = Board.find_arduino_uno()
 
     def read(self):
-        with sr.Serial(port, baudrate=9600) as ser:
+
+        with serial.Serial(self.port, baudrate=9600) as ser:
             data = ser.readline().decode()
-            print(data)
             return data
     
     def write(self, data):
-        with sr.Serial(port, baudrate=9600) as ser:
+
+        with serial.Serial(self.port, baudrate=9600) as ser:
             ser.write(data.encode())
     
     class Do:
             
-            def move_to(self, position):
-                Board.write(f"m{position}")
+        def move_to(self, position):
+
+            Board.write(f"m{position}")

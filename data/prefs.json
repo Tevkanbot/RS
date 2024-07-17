@@ -1,0 +1,13 @@
+{
+    "controller": {
+        "test_1": "bool",
+        "test_2": [
+            -100,
+            100
+        ],
+        "test_3": "str"
+    },
+    "test_1": false,
+    "test_2": -51,
+    "test_3": "hey"
+}
