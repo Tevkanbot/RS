@@ -1,7 +1,7 @@
 {
     "OneWordTriggers": [
         "чай",
-        "баточик",
+        "батончик",
         "кофе",
         "сахар",
         "салфетки"
@@ -13,36 +13,42 @@
     ],
     "OneWordActions": {
         "чай": {
-            "command": "Buy.tea()"
+            "command": "Buy.tea()",
+            "num":false
         },
         "кофе": {
-            "command": ""
+            "command": "",
+            "num":false
         },
         "баточик": {
-            "command": ""
-        },
-        "сахар": {
-            "command": ""
+            "command": "",
+            "num":false
         },
         "салфетки": {
-            "command": ""
+            "command": "",
+            "num":false
        
         },
         "время": {
-            "command": ""
+            "command": "",
+            "num":false
    
         }
     },
     "TwoWordsActions": {
         "сколько осталось": {
-            "command": ""
+            "command": "",
+            "num":false
         },
         "сколько прошло": {
-            "command": ""
+            "command": "",
+            "num":false
         },
         "время прибытия": {
-            "command": ""
+            "command": "",
+             "num":false
         }
+       
         
     }
 

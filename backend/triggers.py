@@ -1,5 +1,5 @@
 from data import Data
-from commands import Audio, Apps, Desktop
+from commands import Buy, Informations, Tickets
 
 class Trigger:
                 
@@ -7,9 +7,7 @@ class Trigger:
         
         phrase = phrase.split() # Разделяем фразу на слова
 
-
         print("splited: ", phrase)
-
 
         data = Data.load() # Загружаем данные, в особенности тригерные слова
 
@@ -54,8 +52,10 @@ class Trigger:
             for trigger in data["OneWordTriggers"]:
                 if trigger == word:
                     return {"WordCount": 1, "trigger": word, "num": num}
-                        
-            
+                else:
+                    return {"WordCount": 0}    
+        
+
     def search_number(fromSearch, phrase):
 
         print(fromSearch)#
@@ -68,7 +68,6 @@ class Trigger:
             for word in phrase:
                 if word.isdigit(): 
                              
-
                     num = int(word)
                     break
                 else:
@@ -84,10 +83,8 @@ class Trigger:
             return fromSearch
 
 
-
     def work(fromReturn):
 
-    
         data = Data.load()
         
         print(fromReturn)
