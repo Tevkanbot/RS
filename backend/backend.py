@@ -1,5 +1,5 @@
-from voise import Voise
-from triggers import Trigger
+from addins.voise import Voise
+from addins.triggers import Trigger
 
 #import os
 #from data import Data
