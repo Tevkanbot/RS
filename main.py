@@ -8,15 +8,11 @@ from data.data import Preferences as prefs
 
 def main():
     while True:
-        #arduino = bo(port = input())
+        arduino = bo(port = input())
 
-        #arduino.Do.move_to(int(input()))
+        arduino.Do.move_to(int(input()))
 
-        #arduino.read()
-
-        one = input("Параметр: ")
-        two = input("Тип: ")
-        print(prefs.delete_parameter(one))
+        arduino.read()
 
 
 if __name__ == "__main__":
