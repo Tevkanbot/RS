@@ -3,16 +3,19 @@
 #imported classes
 
 #custom classes
-from connections.serial import Board as bo
+from connections.robot import Robot
+from connections.connect import Board
+
+
 from data.data import Preferences as prefs
 
+
 def main():
+
+    robot = Robot()
+
     while True:
-        arduino = bo(port = input())
-
-        arduino.Do.move_to(int(input()))
-
-        arduino.read()
+        pass
 
 
 if __name__ == "__main__":

@@ -103,3 +103,9 @@ class Preferences():
             Preferences.dump_all(data)
             return True
         raise Exception("Параметр не существует")
+    
+    def get_parameter(parameter):
+        data = Preferences.load_all()
+        if parameter in data:
+            return data[parameter]
+        raise Exception("Параметр не существует")
