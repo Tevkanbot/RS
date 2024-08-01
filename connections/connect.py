@@ -1,9 +1,8 @@
 #python classes
-import serial
-
+import serial.tools.list_ports
 #imported classes
-
 #custom classes
+
 class Board:
 
     def find_arduino_uno():
@@ -33,9 +32,4 @@ class Board:
 
         with serial.Serial(self.port, baudrate=9600) as ser:
             ser.write(data.encode())
-    
-    class Do:
-            
-        def move_to(self, position):
 
-            Board.write(f"m{position}")
