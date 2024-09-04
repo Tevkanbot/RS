@@ -1,5 +1,5 @@
 from data import Data
-from commands import Buy, Informations, Tickets
+from commands_py import Buy, Informations, Tickets
 
 class Trigger:
                 
