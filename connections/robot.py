@@ -7,9 +7,10 @@ from connections.connect import Board
 
 class Robot:
     def __init__(self):
-
+        
         self.board = Board()
 
+        Robot.display(mode = "logo")
 
 
     def move_to(self, position):
@@ -32,3 +33,19 @@ class Robot:
             return True
         if data == "PayRejected":
             return False
+    
+    def display(self, mode, additional_parameter = None):
+        if mode == "logo":
+            self.board.write("d1") # Команда DISPLAY режим 1 - ЛОГО
+        
+        elif mode == "face":
+            self.board.write("d2") # Команда DISPLAY режим 2 - ЛИЦО
+
+        elif mode == "pay":
+            self.board.write("d3") # Команда DISPLAY режим 3 - ОПЛАТА
+
+        elif mode == "text":
+            self.board.write("d4") # Команда DISPLAY режим 4 - ТЕКСТ
+
+        
+
