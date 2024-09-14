@@ -1,0 +1,7 @@
+SpeechRecognition
+pyserial
+opencv-python
+FER
+keyboard
+pyaudio
+vlc
