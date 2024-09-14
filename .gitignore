@@ -1,4 +1,4 @@
-data.pycache
-pycache
+data.__pycache__
+__pycache__
 .venv
 .vscode
