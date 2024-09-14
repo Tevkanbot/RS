@@ -3,9 +3,10 @@ import asyncio
 import time
 class Robot:
     def __init__(self):
-
+        
         self.board = Board()
 
+        Robot.display(mode = "logo")
 
 
     async def move_to(self, position):
