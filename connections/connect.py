@@ -24,12 +24,19 @@ class Board:
 
     def read(self):
 
-        with serial.Serial(self.port, baudrate=9600) as ser:
-            data = ser.readline().decode()
-            return data
+        with serial.Serial(self.port, baudrate=9600, dsrdtr=True) as ser:
+            ser.dtr = False
+            data = ser.readline()
+            return data.decode(encoding="utf-8").strip()
     
     def write(self, data):
 
-        with serial.Serial(self.port, baudrate=9600) as ser:
+        with serial.Serial(self.port, baudrate=9600, dsrdtr=True) as ser:
+            ser.dtr = False
             ser.write(data.encode())
 
+if __name__ == "__main__":
+    board = Board()
+    board.write("m1")
+    print(11)
+    print(board.read())
