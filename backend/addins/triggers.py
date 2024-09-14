@@ -1,5 +1,5 @@
-from data import Data
-from commands_py import Buy, Informations, Tickets
+from .data import Data
+from .commands import Buy, Informations, Tickets
 
 class Trigger:
                 
@@ -95,9 +95,9 @@ class Trigger:
         if fromReturn["WordCount"] == 1:
             exec(data["OneWordActions"][trigWord]["command"])
 
-            print("я запустиль:", trigWord, ">>>", data["OneWordActions"][trigWord]["command"])
+            #print("я запустиль:", trigWord, ">>>", data["OneWordActions"][trigWord]["command"])
 
         if fromReturn["WordCount"] == 2:
             exec(data["TwoWordsActions"][trigWord]["command"])
 
-            print("я запустиль:", trigWord, ">>>", data["TwoWordsActions"][trigWord]["command"])
+            #print("я запустиль:", trigWord, ">>>", data["TwoWordsActions"][trigWord]["command"])

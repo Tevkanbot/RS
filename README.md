@@ -1,3 +1,8 @@
-this is readme
-1. python -m venv .venv
-2. .venv\Scripts\activate
+Run this to create venv
+python -m venv .venv
+
+Run this to enter venv
+.venv\Scripts\activate 
+
+Run this install requirements
+python -m pip install -r requirements.txt
