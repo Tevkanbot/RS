@@ -14,7 +14,7 @@ class Board:
                 arduino_port = port.device
         
         if arduino_port == None:
-            raise ConnectionError("Arduino is not conected")
+            print ("Arduino is not conected")
         
         return arduino_port
     
@@ -38,5 +38,4 @@ class Board:
 if __name__ == "__main__":
     board = Board()
     board.write("m1")
-    print(11)
-    print(board.read())
+    

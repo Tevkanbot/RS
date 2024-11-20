@@ -1,0 +1,74 @@
+{
+    "one_word_triggers": [
+        "чай",
+        "батончик",
+        "кофе",
+        "маска",
+        "салфетки",
+        "ассортимент",
+        "времени",
+        "всё",
+        "меню"
+    ],
+    "two_word_triggers": [
+        "где туалет",
+        "сколько до",
+        "что есть"
+    ],
+    "one_word_actions": {
+        "чай": {
+            "command": "tea()",
+            "num":false
+        },
+        "кофе": {
+            "command": "coffee()",
+            "num":false 
+        },
+        "батончик": {
+            "command": "bar()",
+            "num":false
+        },
+        "салфетки": {
+            "command": "napkins()",
+            "num":false
+        },
+        "маска": {
+            "command": "mask()",
+            "num":false
+        },
+        "времени": {
+            "command": "vo.say('Время до прибытия')",
+            "num":false
+        },
+        "ассортимент": {
+            "command": "vo.say('Ассортимент')",
+            "num":false
+        },
+        "всё": {
+            "command": "pass",
+            "num":false
+
+        },
+        "меню": {
+            "command": "vo.say('Ассортимент')",
+            "num":false
+        }
+    },
+    "two_word_actions": {
+        "где туалет": {
+            "command": "vo.say('Где туалет')",
+            "num":false
+        },
+        "сколько до": {
+            "command": "vo.say('Сколько до прибытия')",
+            "num":false
+        },
+        "что есть": {
+            "command": "vo.say('Ассортимент')",
+             "num":false
+        }
+       
+        
+    }
+
+}
