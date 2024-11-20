@@ -4,4 +4,6 @@ opencv-python
 FER
 keyboard
 pyaudio
-vlc
+audioplayer
+pytesseract
+tensorflow

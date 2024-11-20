@@ -2,12 +2,22 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_PN532.h>
+#include "Servo.h"
 
-#define PN532_IRQ 9
+#define PN532_IRQ 10
 
 SoftwareSerial mySerial(2, 3);  // RX, TX
 Adafruit_PN532 nfc(PN532_IRQ, 100);
 String displayStatus = "logo";
+
+Servo myservo; //сервопривод
+
+// порты MotorShild
+#define SPEED_1      5 
+#define DIR_1        4
+ 
+#define SPEED_2      6
+#define DIR_2        7
 
 void setup() {
   mySerial.begin(9600);
@@ -17,6 +27,13 @@ void setup() {
   nfc.begin();
   int versiondata = nfc.getFirmwareVersion();
   nfc.SAMConfig();
+
+  myservo.attach(8); // сервопривод
+  myservo.write(0); // сервопривод 
+
+  for (int i = 4; i < 8; i++) {  //настройка портов MotorShild   
+    pinMode(i, OUTPUT);
+  }
 
   sendCommand("page logo");  //фикс дисплея, так как первую команду он игнорит
 }
@@ -38,13 +55,71 @@ void loop() {
 
     if (command == 'm') {
       int data = input.toInt();  // int 15
-
+      switch (data) {
+        case 0:
+          {
+            //код для передвижения на базу
+            digitalWrite(DIR_1, HIGH);
+            digitalWrite(DIR_2, HIGH);
+  
+  // Включаем оба мотора на максимальной скорости
+            analogWrite(SPEED_1, 150);
+            analogWrite(SPEED_2, 150);
+            delay(1000);
+            analogWrite(SPEED_1, 0);
+            analogWrite(SPEED_2, 0);
+            Serial.println("Done");
+            break;
+          }
+        case 1:
+          {
+            // код передвмжения на 1 место
+              digitalWrite(DIR_1, LOW);
+              digitalWrite(DIR_2, LOW);              
+              
+              analogWrite(SPEED_1, 150);
+              analogWrite(SPEED_2, 150);
+              delay(1000);
+              analogWrite(SPEED_1, 0);
+              analogWrite(SPEED_2, 0);
+              Serial.println("Done");
+            break;
+          }
+          case 2:
+          {
+            // код передвмжения на 2 место
+              digitalWrite(DIR_1, LOW);
+              digitalWrite(DIR_2, LOW);              
+              
+              analogWrite(SPEED_1, 150);
+              analogWrite(SPEED_2, 150);
+              delay(2000);
+              analogWrite(SPEED_1, 0);
+              analogWrite(SPEED_2, 0);
+              Serial.println("Done");
+            break;
+          }
+      }  //switch
       // Код для движения, data - место куда ехать, 0 - база, 1 - первое место и т.д.
     }
 
     if (command == 'b') {
       int data = input.toInt();  // int 15
-
+      switch(data)
+      {
+        case 0:
+        {
+          myservo.write(0); 
+          //закрытие ящика
+          break;
+        }
+        case 1:
+        {
+          myservo.write(300); 
+          //открытие ящика
+          break;
+        }
+      }
       // Код для открытия ящика, data - открыть или закрыть, 0 - закрыть, 1 - открыть
     }
 
@@ -97,14 +172,23 @@ void loop() {
       uint8_t uid[8];     // Буфер для хранения ID карты
       uint8_t uidLength;  // Размер буфера карты
 
-      success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength, 20);
-      if (success) isPayDone = 1;
-      else Serial.println("PayRejected");
+      //success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength, 20);
+      //if (success) Serial.println("PayCon
+      //else Serial.println("PayRejected");
+      delay(5000);
+      Serial.println("PayConfirmed");
       //if (isPayDone == true) {
       //  Serial.println("PayConfirmed");
       //} else {
       //  Serial.println("PayRejected");
       //}
     }  // command p
+    if (command == 'u') {
+      // ТУТ ПИШЕШЬ НАХОЖДЕНИЕ РАСТОЯНИЯ
+      // Serial.println(первое растояние, " ", второе расстояние);
+      //Примеры выводов
+      //105 143
+      //83 180
+    }
   }    // if serial av
 }  // loop
