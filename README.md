@@ -15,13 +15,13 @@
 ##### Create venv
 python -m venv .venv
 
-###### Run this to enter venv
+##### Run this to enter venv
 .venv\Scripts\activate
 
-###### Upgrade pip
+##### Upgrade pip
 python.exe -m pip install --upgrade pip
 
-###### Run this install requirements
+##### Run this install requirements
 python -m pip install -r requirements.txt
 
 ### Work
