@@ -14,7 +14,7 @@ class FaceRecognizer:
         self.camera = cv2.VideoCapture(0)
 
 
-    async def face_capture(self):
+    def face_capture(self):
         try:
             while True:
 
@@ -36,9 +36,10 @@ class FaceRecognizer:
 
                     # Распознаем эмоцию
                     emotions = self.emotion_detector.detect_emotions(face_roi) # Используем FER для распознавания эмоций
-                    await asyncio.sleep(0,5)
+                    #time.sleep(0.5)
                     # Если эмоция найдена, выводим ее на экран
                     if emotions:
+                        #print(emotions)
                         emotions = emotions[0]
                         emotions = emotions["emotions"]
                         #print(emotions)
@@ -49,7 +50,7 @@ class FaceRecognizer:
                 #cv2.imshow("rez", img) #для отображения лица на экран
                 # if cv2.waitKey(1) & 0xff == ord('q'):
                 #     pass
-                    await asyncio.sleep(0.1)
+                    #time.sleep(0.1)
         finally:
             self.camera.release()
             cv2.destroyAllWindows()
@@ -59,5 +60,5 @@ class FaceRecognizer:
 
 if __name__ == "__main__":
     face = FaceRecognizer()
-    asyncio.run(face.face_capture())
+    face.face_capture()
     

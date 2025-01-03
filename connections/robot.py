@@ -1,25 +1,51 @@
-from .connect import Board
+from connect import Board
 import asyncio
 import time
 class Robot:
     def __init__(self):
         
-        self.board = Board()
+        self.board = Board("Robot")
         self.display_status = "logo"
 
+    def get_dist(self):
+        self.board.write("u")
+        recieved = self.board.read().split()
+        print(recieved)
+        if recieved[1] < 10 or recieved[0] < 10:
+            return False
+        return True
 
-    def move_to(self, position):
-        write = f"m{position}"
-        if position == 0:
-            self.board.write("m0") # Команда MOVE, значение устанавливаем извне
+
+    def move_to(self, position, reverse=None):
+        position = int(position)
+        if reverse:
+            for i in range(position):
+                self.board.write("u")
+                recieved = self.board.read().split()
+                recieved[0] = int(recieved[0])
+                recieved[1] = int(recieved[1])
+                print(recieved)
+                if recieved[0] < 10:
+                    raise Exception("ПРЕПЯТСТВИЕ")
+                self.board.write("m1")
+                time.sleep(1)
         else:
-            self.board.write("m1") # Команда MOVE, значение устанавливаем извне
-
-
-
-        #done_text = self.board.read()
-
+            for i in range(position):
+                self.board.write("u")
+                recieved = self.board.read().split()
+                recieved[0] = int(recieved[0])
+                recieved[1] = int(recieved[1])
+                print(recieved)
+                if recieved[1] < 10:
+                    raise Exception("ПРЕПЯТСТВИЕ")
+                self.board.write("m0")
+                time.sleep(1)
+        
+        # Убираем эту строку:
+        # self.board.write = f"m{position}"
+        self.board.write(f"m{position}")  # Передаём команду напрямую
         time.sleep(1)
+
 
 
         
@@ -66,7 +92,7 @@ class Robot:
         elif mode == "shop":
             if additional_parameter:
                 if self.display_status != "shop":
-                    self.board.write(f"dshop")
+                    self.board.write("dshop")
                     time.sleep(1)
                 self.board.write(f"dshop{additional_parameter}")
             else:
@@ -80,20 +106,38 @@ class Robot:
 
         
         
-    class Queue:
-        def __init__(self):
-            self.queue = []
+class Queue:
+    def __init__(self):
+        self.board = Board("Buttons")
+        self.queue = []
 
-        def add(self, seat): # Добовляем пасажра в конец очереди
-            self.queue.append(seat)
+    def update(self): # Добовляем пасажра в конец очереди
+        self.board.write("g")
+        received_text = self.board.read()
+        
+        self.queue = received_text.split()
+        print(self.queue)
 
 
-        def get_first(self):
-            try:
-                return self.queue.pop(0) # Удаляем первого пасажира из очереди
-            
-            except IndexError:
-                return None
-            
-        def debug(self):
-            print(self.queue)
+    def get_first(self):
+        try:
+            first = self.queue.pop(0) # Удаляем первого пасажира из очереди
+            self.board.write(first)
+            return first
+        
+        except IndexError:
+            return None
+        
+    def debug(self):
+        print(self.queue)
+
+
+if __name__ == "__main__":
+    queue = Queue()
+    robot = Robot()
+    while True:
+        
+        robot.move_to(2)
+        robot.move_to(2, True)
+
+    
