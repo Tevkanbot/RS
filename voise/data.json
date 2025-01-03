@@ -17,23 +17,23 @@
     ],
     "one_word_actions": {
         "чай": {
-            "command": "tea()",
+            "command": "tea(ro)",
             "num":false
         },
         "кофе": {
-            "command": "coffee()",
+            "command": "coffee(ro)",
             "num":false 
         },
         "батончик": {
-            "command": "bar()",
+            "command": "bar(ro)",
             "num":false
         },
         "салфетки": {
-            "command": "napkins()",
+            "command": "napkins(ro)",
             "num":false
         },
         "маска": {
-            "command": "mask()",
+            "command": "mask(ro)",
             "num":false
         },
         "времени": {

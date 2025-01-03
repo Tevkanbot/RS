@@ -47,6 +47,8 @@ void setup() {
 
   pinMode(trigPin1, OUTPUT); pinMode(echoPin1, INPUT);
   pinMode(trigPin2, OUTPUT); pinMode(echoPin2, INPUT);
+
+  Serial.println("Robot");
 }
 int measureDistance(int trigPin, int echoPin) {
     digitalWrite(trigPin, LOW); 
@@ -85,7 +87,10 @@ void loop() {
   // Включаем оба мотора на максимальной скорости
             analogWrite(SPEED_1, 255);
             analogWrite(SPEED_2, 255);
-            delay(5000);
+            delay(1000);
+            analogWrite(SPEED_1, 0);
+            analogWrite(SPEED_2, 0);
+
             break;
           }
         case 1:
@@ -96,7 +101,9 @@ void loop() {
 
               analogWrite(SPEED_1, 255);
               analogWrite(SPEED_2, 255);
-              delay(5000);
+              delay(1000);
+            analogWrite(SPEED_1, 0);
+            analogWrite(SPEED_2, 0);
             break;
           }
       }  //switch

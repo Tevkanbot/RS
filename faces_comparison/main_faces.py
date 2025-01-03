@@ -17,8 +17,8 @@ get_face(image_path) принимает путь к файлу (или изоб�
 
 
 # загрузка модели
-model_path = r"C:\projects\RS\faces\data_face\res10_300x300_ssd_iter_140000.caffemodel"
-config_path = r"C:\projects\RS\faces\data_face\deploy.prototxt"
+model_path = r"C:\projects\RS\faces_comparison\data_face\res10_300x300_ssd_iter_140000.caffemodel"
+config_path = r"C:\projects\RS\faces_comparison\data_face\deploy.prototxt"
 net = cv2.dnn.readNetFromCaffe(config_path, model_path)
 
 face_cascade_db = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
@@ -83,7 +83,7 @@ def get_face(image_path):
 
 
 camera_face = face_recog(face_cascade_db,camera)
-file_face = get_face(r"C:\projects\RS\faces\data_face\2.jpg")
+file_face = get_face(r"C:\projects\RS\faces_comparison\data_face\2.jpg")
 
 if camera_face is not None and file_face is not None:
     # Приводим лица к одинаковому размеру
@@ -96,30 +96,3 @@ if camera_face is not None and file_face is not None:
     print(f"Сходство лиц: {similarity:.2f}")
 else:
     print("Не удалось найти лица в одном из изображений.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
