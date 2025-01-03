@@ -49,7 +49,7 @@ while True:
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-    text = pytesseract.image_to_string("C:\projects\RS\pasport_eye\image.jpg",lang="rus")#config = custom_config
+    text = pytesseract.image_to_string("C:\projects\RS\pasport_eye\image1.jpg",lang="rus") #config = custom_config
 
     cv2.imshow('Камера', frame)
 
