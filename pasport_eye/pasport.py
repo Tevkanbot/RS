@@ -1,5 +1,5 @@
 import cv2
-import easyocqqr
+import easyocr
 
 json = [
     3,
