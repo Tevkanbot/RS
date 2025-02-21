@@ -19,7 +19,7 @@ class Board:
         # Считываем ответ от каждой платы, чтобы понять, что это за плата
         for port in arduino_ports:
             with serial.Serial(port, baudrate=9600, timeout=2) as ser:
-                ser.write(b"Identify")  # Отправка команды для идентификации
+                #ser.write(b"Identify")  # Отправка команды для идентификации
                 response = ser.readline().decode('utf-8').strip()
                 if response == board_type:
                     print(f"Found {board_type} at {port}")

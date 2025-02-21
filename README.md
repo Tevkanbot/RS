@@ -12,6 +12,9 @@
 
 ### Installation
 
+##### Run in Admin PowerShell
+Set-ExecutionPolicy RemoteSigned
+
 ##### Create venv
 python -m venv .venv
 

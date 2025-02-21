@@ -1,60 +1,54 @@
-import keyboard
+#import keyboard
 import asyncio
-import multiprocessing
-from voise.voise import Voise
-from connections.robot import Robot, Queue
-#from data.data import *
-from face_recognizer.face_recognizer import FaceRecognizer
-from voise.triggers import Trigger
-from voise.data import Data
 import time
+#import multiprocessing
 
 
-def work(res, ro, vo):
-    data = Data.load()
+from voise.voise import Voise #Распознование и симуляция речи
+from voise.trigger import Trigger #Распознование в речи
+from connections.robot import Robot, Queue #Работа с механичкской частью и кнопками у пассажиров (Queue)
 
-    trigWord = res["trigger"]
-    print("я в ворке")
-    num = res["num"]
-    if res["WordCount"] == "one":
-        exec(data["one_word_actions"][trigWord]["command"])
 
-    if res["WordCount"] == "two":
-        exec(data["two_word_actions"][trigWord]["command"])
+def work(trigger, ro, vo):
+    """Execute the command associated with the given trigger"""
+    if trigger:
+        exec(trigger["command"])
+    else:
+        print("No action for the given trigger.")
 
 
 def tea(ro):
     ro.display("shop", "tea")
-    print("я в чае")
+    print("Executing tea command")
 
 
 def bar(ro):
     ro.display("shop", "bar")
+    print("Executing bar command")
 
 
 def coffee(ro):
     ro.display("shop", "coffee")
+    print("Executing coffee command")
 
 
 def napkins(ro):
     ro.display("shop", "napkins")
+    print("Executing napkins command")
 
 
 def mask(ro):
     ro.display("shop", "mask")
+    print("Executing mask command")
 
 
-def emotion_control():
-    # Создаём FaceRecognizer внутри процесса, чтобы избежать ошибок pickling
-    face = FaceRecognizer()
-    face.face_capture()
 
-
-def main():
+async def main():
     vo = Voise()
     ro = Robot()
     queue = Queue()
     vo.calibrate_recognizer()
+    print("Классы созданы, начало работы.")
 
     while True:
         bill = 0
@@ -63,6 +57,7 @@ def main():
 
         if pasanger_seat:
             ro.display("logo")
+
             print(pasanger_seat)
             time.sleep(1)
             ro.move_to(pasanger_seat)
@@ -75,15 +70,15 @@ def main():
                 phrase = vo.get_phrase()
                 if not phrase:
                     continue
-                res = Trigger.search_trigger(phrase)
-                print("res", res)
+                trigger = Trigger.find_trigger(phrase)
+                print("Trigger", trigger)
 
-                if res["WordCount"] != 0:
-                    work(res, ro, vo)  # Передаём ro и vo в функцию work
-                    print(pasanger_seat, res)
+                if trigger:
+                    work(trigger, ro, vo)
+                    print(pasanger_seat, trigger)
                     print("bill", bill)
 
-                    if res["trigger"] == "всё":
+                    if trigger["phrase"] == "всё":
                         break
 
             ro.move_to(pasanger_seat, True)
@@ -105,12 +100,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # Запуск процессов
-    #emotion_control_process = multiprocessing.Process(target=emotion_control)
-    main_pr = multiprocessing.Process(target=main)
-    #emotion_control_process.start()
-    main_pr.start()
 
-    # Ожидание завершения процессов (опционально)
-    #emotion_control_process.join()
-    main_pr.join()
+    asyncio.run(main())

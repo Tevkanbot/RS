@@ -1,0 +1,16 @@
+opencv-python
+FER
+pytesseract
+tensorflow>=2.9.0
+fastapi
+uvicorn
+easyocr
+facenet-pytorch
+face_recognition
+scikit-learn
+numpy
+deepface
+python-multipart
+moviepy==1.0.3
+torch
+torchvision

@@ -1,74 +1,52 @@
 {
-    "one_word_triggers": [
-        "чай",
-        "батончик",
-        "кофе",
-        "маска",
-        "салфетки",
-        "ассортимент",
-        "времени",
-        "всё",
-        "меню"
-    ],
-    "two_word_triggers": [
-        "где туалет",
-        "сколько до",
-        "что есть"
-    ],
-    "one_word_actions": {
-        "чай": {
-            "command": "tea(ro)",
-            "num":false
+    "triggers": [
+        {
+            "phrase": "чай",
+            "command": "tea(ro)"
         },
-        "кофе": {
-            "command": "coffee(ro)",
-            "num":false 
+        {
+            "phrase": "кофе",
+            "command": "coffee(ro)"
         },
-        "батончик": {
-            "command": "bar(ro)",
-            "num":false
+        {
+            "phrase": "батончик",
+            "command": "bar(ro)"
         },
-        "салфетки": {
-            "command": "napkins(ro)",
-            "num":false
+        {
+            "phrase": "салфетки",
+            "command": "napkins(ro)"
         },
-        "маска": {
-            "command": "mask(ro)",
-            "num":false
+        {
+            "phrase": "маска",
+            "command": "mask(ro)"
         },
-        "времени": {
-            "command": "vo.say('Время до прибытия')",
-            "num":false
+        {
+            "phrase": "времени",
+            "command": "vo.say('Время до прибытия')"
         },
-        "ассортимент": {
-            "command": "vo.say('Ассортимент')",
-            "num":false
+        {
+            "phrase": "ассортимент",
+            "command": "vo.say('Ассортимент')"
         },
-        "всё": {
-            "command": "pass",
-            "num":false
-
+        {
+            "phrase": "всё",
+            "command": "pass"
         },
-        "меню": {
-            "command": "vo.say('Ассортимент')",
-            "num":false
+        {
+            "phrase": "меню",
+            "command": "vo.say('Ассортимент')"
+        },
+        {
+            "phrase": "где туалет",
+            "command": "vo.say('Где туалет')"
+        },
+        {
+            "phrase": "сколько до",
+            "command": "vo.say('Сколько до прибытия')"
+        },
+        {
+            "phrase": "что есть",
+            "command": "vo.say('Ассортимент')"
         }
-    },
-    "two_word_actions": {
-        "где туалет": {
-            "command": "vo.say('Где туалет')",
-            "num":false
-        },
-        "сколько до": {
-            "command": "vo.say('Сколько до прибытия')",
-            "num":false
-        },
-        "что есть": {
-            "command": "vo.say('Ассортимент')",
-             "num":false
-        }
-       
-        
-    }
-
+    ]
 }
