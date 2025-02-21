@@ -7,10 +7,13 @@
 - [ ] Add a person face recogn
 - [ ] Add a second Arduino button system
 
-- [ ] Combine it all into RS 1.5
+- [ ] Combine it all into RS ver 1.7
 
 
 ### Installation
+
+##### Run in Admin PowerShell
+Set-ExecutionPolicy RemoteSigned
 
 ##### Create venv
 python -m venv .venv
@@ -26,4 +29,4 @@ python -m pip install -r requirements.txt
 
 ### Work
 
-- **RS/RS.ino** this is a Arduino code
+- **RS/RS.ino** is a Arduino code
