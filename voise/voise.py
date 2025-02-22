@@ -57,7 +57,7 @@ class Voise:
 
 if __name__ == "__main__":
     vo = Voise()
-    #vo.calibrate_recognizer
-    #while True:
-    #    print(vo.get_phrase())
+    vo.calibrate_recognizer
+    while True:
+        print(vo.get_phrase())
     vo.say("Здравствуйте")

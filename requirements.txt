@@ -1,9 +1,5 @@
 SpeechRecognition
 pyserial
-opencv-python
-FER
-keyboard
 pyaudio
 audioplayer
-pytesseract
-tensorflow
+keyboard
