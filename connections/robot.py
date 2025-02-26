@@ -1,4 +1,4 @@
-from connect import Board
+from .connect import Board
 import asyncio
 import time
 import requests

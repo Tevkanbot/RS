@@ -3,7 +3,7 @@ import asyncio
 import time
 # import multiprocessing
 
-from ai import ai
+from ai import Ai
 from voise.voise import Voise  # Распознование и симуляция речи
 from voise.trigger import Trigger  # Распознование в речи
 # Работа с механичкской частью и кнопками у пассажиров (Queue)
@@ -27,7 +27,7 @@ async def main():
     vo = Voise()
     ro = Robot()
     queue = Queue()
-    ai = ai()
+    ai = Ai()
     vo.calibrate_recognizer()
     print("Классы созданы, начало работы.")
 
@@ -40,11 +40,37 @@ async def main():
             ro.move_to(pasanger_seat)
 
             print(f"Мы у места под номером {pasanger_seat}")
+            while True:
+                try:
+                    emotion = Ai.e_recog()
+                    
+                except Exception as e:
+                    print("Error in emotion recognition:", e)
 
+                if emotion == True:
+                    #te.send("Обнаружено девиантное поведение")
+                    vo.say("Девиантное предупреждение")
+                elif emotion == False:
+                    break
+                elif emotion == None:
+                    continue
+
+
+
+            try:
+                face = ai.f_comp()
+            except Exception as e:
+                print("Error in emotion recognition:", e)
+            
+            if isinstance(face, int):
+                for i in PASSENGER_DATA:
+                    if i["seat"] == face:
+                        vo.say(i["FIO"][1])
+            
             vo.say("Здравствуйте")
-            #Проверка пользователя, либо дима либо иван либо никита vo.say("имя")
             vo.say("Ассортимент")
             ro.start_shopping()
+
 
             while True:
                 phrase = vo.get_phrase()

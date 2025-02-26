@@ -6,7 +6,7 @@ import time
 # Server address
 server_address = "http://10.0.101.122:49000"  # Change to your server's IP address
 
-class ai:
+class Ai:
     def __init__(self):
         # Camera setup
         self.camera_index = 0  # Change the index if needed
@@ -49,41 +49,53 @@ class ai:
         """
         Emotion recognition.
         Captures an image, sends it to the API for emotion recognition,
-        and returns whether aggression is detected (True/False).
+        and returns:
+        - True if aggression is detected,
+        - False if no aggression is detected,
+        - None if no face is detected.
         """
         image = self.capture_and_flip()
         result = self.send_image_to_api(image, "/recognize/emotion")
         if result and result.get("status") == "success":
-            return result.get("data", {}).get("aggression_detected", False)
-        return False
+            if result.get("data", {}).get("aggression_detected"):
+                return True
+            return False
+        return None
 
     def f_comp(self):
         """
         Face comparison.
         Captures an image, sends it to the API for face comparison,
-        and returns the seat number if a match is found.
+        and returns:
+        - The seat number if the face is recognized,
+        - False if the face is not in memory (not matched),
+        - None if no face is detected.
         """
         image = self.capture_and_flip()
         result = self.send_image_to_api(image, "/compare/faces")
         if result and result.get("status") == "success":
             return result.get("data", {}).get("seat")
+        if result and result.get("status") == "not_found":
+            return False
         return None
 
     def p_recog(self):
         """
         Passport recognition.
         Captures an image, sends it to the API for passport recognition,
-        and returns the seat number if the passport is recognized.
+        and returns:
+        - The seat number if the passport is recognized,
+        - False if the passport is not recognized.
         """
         image = self.capture_and_flip()
         result = self.send_image_to_api(image, "/recognize/passport")
         if result and result.get("status") == "success":
             return result.get("data", {}).get("seat")
-        return None
+        return False
 
 # Example usage
 if __name__ == "__main__":
-    ai_instance = ai()
+    ai_instance = Ai()
     
     # Emotion recognition
     try:
