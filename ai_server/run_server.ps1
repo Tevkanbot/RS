@@ -11,4 +11,4 @@ python.exe -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
 # Запустить сервер
-py -m api_server --test
+py -m api_server

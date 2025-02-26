@@ -1,24 +1,104 @@
 {
     "triggers": [
         {
+            "phrase": "суп",
+            "command": "ro.write('+soup')"
+        },
+        {
+            "phrase": "фри",
+            "command": "ro.write('+fries')"
+        },
+        {
+            "phrase": "цезарь",
+            "command": "ro.write('+caesar')"
+        },
+        {
+            "phrase": "плов",
+            "command": "ro.write('+pilaf')"
+        },
+        {
+            "phrase": "борщ",
+            "command": "ro.write('+borsch')"
+        },
+        {
+            "phrase": "макароны",
+            "command": "ro.write('+pasta')"
+        },
+        {
             "phrase": "чай",
-            "command": "tea(ro)"
+            "command": "ro.write('+tea')"
         },
         {
             "phrase": "кофе",
-            "command": "coffee(ro)"
+            "command": "ro.write('+coffee')"
         },
         {
-            "phrase": "батончик",
-            "command": "bar(ro)"
+            "phrase": "яблочный сок",
+            "command": "ro.write('+applejuice')"
         },
         {
-            "phrase": "салфетки",
-            "command": "napkins(ro)"
+            "phrase": "морс",
+            "command": "ro.write('+morse')"
+        },
+        {
+            "phrase": "вода",
+            "command": "ro.write('+water')"
+        },
+        {
+            "phrase": "воды",
+            "command": "ro.write('+water')"
+        },
+        {
+            "phrase": "кола",
+            "command": "ro.write('+cola')"
+        },
+        {
+            "phrase": "бутерброды",
+            "command": "ro.write('+sandwiches')"
+        },
+        {
+            "phrase": "соленые палочки",
+            "command": "ro.write('+saltedsticks')"
+        },
+        {
+            "phrase": "хлебцы",
+            "command": "ro.write('+breadrolls')"
+        },
+        {
+            "phrase": "бублики",
+            "command": "ro.write('+bagel')"
+        },
+        {
+            "phrase": "венера",
+            "command": "ro.write('+venus')"
+        },
+        {
+            "phrase": "юпитер",
+            "command": "ro.write('+jupiter')"
+        },
+        {
+            "phrase": "тапочки",
+            "command": "ro.write('+slippers')"
         },
         {
             "phrase": "маска",
-            "command": "mask(ro)"
+            "command": "ro.write('+mask')"
+        },
+        {
+            "phrase": "ручка",
+            "command": "ro.write('+pen')"
+        },
+        {
+            "phrase": "робот",
+            "command": "ro.write('+rs')"
+        },
+        {
+            "phrase": "стакан",
+            "command": "ro.write('+glass')"
+        },
+        {
+            "phrase": "поезд",
+            "command": "ro.write('+train')"
         },
         {
             "phrase": "времени",
@@ -47,6 +127,10 @@
         {
             "phrase": "что есть",
             "command": "vo.say('Ассортимент')"
+        },
+        {
+            "phrase": "очистить",
+            "command": "ro.write('dclear')"
         }
     ]
 }
