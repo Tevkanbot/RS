@@ -83,5 +83,5 @@ if __name__ == "__main__":
     import uvicorn
     hostname = socket.gethostname()
     local_ip = socket.gethostbyname(hostname)
-    print(f"Server is running at: http://{local_ip}:8008")
-    uvicorn.run(app, host="0.0.0.0", port=8008)
+    print(f"Server is running at: http://{local_ip}:49000")
+    uvicorn.run(app, host="0.0.0.0", port=49000)

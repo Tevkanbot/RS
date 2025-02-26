@@ -39,8 +39,12 @@ async def main():
             ro.move_to(pasanger_seat)
 
             print(f"Мы у места под номером {pasanger_seat}")
+            
+
+
 
             vo.say("Здравствуйте")
+            #Проверка пользователя, либо дима либо иван либо никита vo.say("имя")
             vo.say("Ассортимент")
             ro.start_shopping()
 
@@ -53,7 +57,6 @@ async def main():
 
                 if trigger:
                     work(trigger, ro, vo)
-                    # print(pasanger_seat, trigger)
 
                     if trigger["phrase"] == "всё":
                         break
@@ -83,6 +86,9 @@ async def main():
                 if trigger["phrase"] == "всё":
                     break
             ro.move_box(False)
+            ro.move_to(0)
+        else:
+            time.sleep(3)
 
 
 if __name__ == "__main__":

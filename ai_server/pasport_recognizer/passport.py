@@ -3,9 +3,9 @@ import easyocr
 import torch
 import asyncio
 import re
-from rapidfuzz import fuzz
+import time
 
-# Список данных пассажиров (обновлённая структура)
+# Passenger data (updated structure)
 PASSENGER_DATA = [
     {"FIO": ["карелин", "иван", "сергеевич"], "seat": 1, "van": 1},
     {"FIO": ["кирюхин", "дмитрий", "александрович"], "seat": 2, "van": 1},
@@ -14,7 +14,7 @@ PASSENGER_DATA = [
 ]
 
 def preprocess_image(image):
-    """Улучшение изображения для OCR с использованием размытия, CLAHE и масштабирования."""
+    """Image preprocessing for OCR with blurring, CLAHE, and resizing."""
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     filtered = cv2.bilateralFilter(gray, 9, 75, 75)
     equalized = cv2.equalizeHist(filtered)
@@ -25,20 +25,19 @@ def preprocess_image(image):
     return enlarged
 
 def recognize_passport_text(image):
-    """Распознавание текста на изображении с улучшенной предобработкой."""
+    """Recognize text from image with improved preprocessing."""
     preprocessed_image = preprocess_image(image)
     cv2.imshow("Preprocessed Image", preprocessed_image)
     cv2.waitKey(1)
     reader = easyocr.Reader(['ru'], gpu=False)
     results = reader.readtext(preprocessed_image, paragraph=True, detail=0)
-    print("Результаты EasyOCR:", results)
+    print("EasyOCR Results:", results)
     return " ".join(results).lower()
 
 def fuzzy_match(fio_words, recognized_words, threshold=80):
     """
-    Для каждого слова из fio_words ищем, есть ли слово из recognized_words с коэффициентом схожести >= threshold.
-    Требуемое количество совпадений: если больше одного слова, то хотя бы len(fio_words)-1 совпадение,
-    иначе — одно совпадение.
+    For each word in fio_words, check if there is a matching word in recognized_words with similarity >= threshold.
+    Required matches: if more than one word, at least len(fio_words)-1 matches, otherwise one match is sufficient.
     """
     match_count = 0
     for fio_word in fio_words:
@@ -50,7 +49,7 @@ def fuzzy_match(fio_words, recognized_words, threshold=80):
     return match_count >= required
 
 def match_passenger_info(recognized_text, threshold=80):
-    """Сопоставление распознанного текста с данными пассажиров с использованием фаззи-сопоставления."""
+    """Match recognized text with passenger data using fuzzy matching."""
     recognized_words = re.findall(r'\w+', recognized_text.lower())
     for passenger in PASSENGER_DATA:
         fio_words = [word.lower() for word in passenger["FIO"] if word]
@@ -80,43 +79,58 @@ class PassportRecognizer:
         import numpy as np
         image = cv2.imdecode(np.frombuffer(contents, np.uint8), cv2.IMREAD_COLOR)
         if image is None:
-            return {"status": "error", "message": "Не удалось прочитать изображение."}
+            return {"status": "error", "message": "Unable to read the image."}
+        
+        start_time = time.time()
         recognized_text = self.recognize_text(image)
         match = self.match_passenger_info(recognized_text)
+        end_time = time.time()
+        time_taken = round(end_time - start_time, 2)
+
         if match:
-            return {"status": "success", "data": match, "recognized_text": recognized_text}
+            return {
+                "status": "success",
+                "data": match,
+                "recognized_text": recognized_text,
+                "time_elapsed": time_taken
+            }
         else:
-            return {"status": "not_found", "message": "Пассажир не найден", "recognized_text": recognized_text}
+            return {
+                "status": "not_found",
+                "message": "Passenger not found",
+                "recognized_text": recognized_text,
+                "time_elapsed": time_taken
+            }
 
     async def recognize(self, file):
         contents = await file.read()
         result = await asyncio.to_thread(self._process_passport, contents)
         return result
 
-# Тестирование через камеру – распознавание всего изображения без рамки
+# Testing through the camera – recognition for the entire image without a frame
 def main():
     import cv2
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
-        print("Не удалось получить доступ к камере")
+        print("Unable to access the camera")
         return
     while True:
         ret, frame = cap.read()
         if not ret:
-            print("Не удалось получить изображение с камеры")
+            print("Error capturing image")
             break
-        cv2.imshow("Кадр с камеры", frame)
+        cv2.imshow("Camera Frame", frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('s'):
             recognized_text = recognize_passport_text(frame)
-            print("Распознанный текст:", recognized_text)
+            print("Recognized Text:", recognized_text)
             match = match_passenger_info(recognized_text)
             if match:
-                print(f"Ваш вагон: {match['van']}, ваше место: {match['seat']}")
+                print(f"Your train: {match['van']}, your seat: {match['seat']}")
             else:
-                print("Извините, вас нет в списке пассажиров, обратитесь за справкой к проводнику")
+                print("Sorry, you are not on the list. Please consult with the conductor.")
         elif key == ord('q'):
-            print("quit")
+            print("Quit")
             break
     cap.release()
     cv2.destroyAllWindows()
