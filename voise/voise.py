@@ -54,10 +54,15 @@ class Voise:
 
         if phrase == "Ваш заказ":
             AudioPlayer(os.path.join(voiselines_path, "Ваш заказ.mp3")).play(block=True)
+        
+        if phrase == "дмитрий":
+            AudioPlayer(os.path.join(voiselines_path, "Дмитрий.mp3")).play(block=True)
+
+            
 
 if __name__ == "__main__":
     vo = Voise()
     vo.calibrate_recognizer
-    while True:
-        print(vo.get_phrase())
-    vo.say("Здравствуйте")
+    #while True:
+    #    print(vo.get_phrase())
+    vo.say("Дмитрий")
