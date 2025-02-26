@@ -9,6 +9,11 @@ from voise.trigger import Trigger  # Распознование в речи
 # Работа с механичкской частью и кнопками у пассажиров (Queue)
 from connections.robot import Robot, Queue
 
+PASSENGER_DATA = [
+    {"FIO": ["карелин", "иван", "сергеевич"], "seat": 1, "van": 1},
+    {"FIO": ["кирюхин", "дмитрий", "александрович"], "seat": 2, "van": 1},
+    {"FIO": ["макеев", "дмитрий", "николаевич"], "seat": 3, "van": 1}
+]
 
 def work(trigger, ro, vo):
     """Execute the command associated with the given trigger"""

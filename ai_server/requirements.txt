@@ -14,3 +14,4 @@ deepface
 tf-keras
 python-multipart
 moviepy==1.0.3
+rapidfuzz

@@ -36,14 +36,10 @@ class EmotionRecognizer:
                 emotions = analysis[0]['emotions']
                 if emotions.get('angry', 0) > 0.4 or emotions.get('disgust', 0) > 0.5 or emotions.get('sad', 0) > 0.5:
                     end_time = time.time()
-                    # Кодируем обрезок лица в JPEG
-                    _, encoded_face = cv2.imencode('.jpg', face)
-                    face_bytes = encoded_face.tobytes()
                     return {
                         "status": "aggression_detected",
                         "message": "Slight aggression detected.",
-                        "time_taken": f"{end_time - start_time:.4f} seconds",
-                        "face_crop": face_bytes
+                        "time_taken": f"{end_time - start_time:.4f} seconds"
                     }
         end_time = time.time()
         return {
@@ -68,7 +64,7 @@ class EmotionRecognizer:
             }
 
 if __name__ == "__main__":
-    # Тестирование через веб-камеру (не изменяем)
+    # Тестирование через веб-камеру (оставляем без изменений)
     import cv2
     from io import BytesIO
     from starlette.datastructures import UploadFile as TestUploadFile
