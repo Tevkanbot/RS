@@ -4,6 +4,7 @@ import torch
 import asyncio
 import re
 import time
+from rapidfuzz import fuzz
 
 # Passenger data (updated structure)
 PASSENGER_DATA = [
@@ -13,8 +14,8 @@ PASSENGER_DATA = [
     {"FIO": ["симаков", "никита", "евгеньевич"], "seat": 2, "van": 1},
 ]
 
+# Preprocess image to improve OCR quality
 def preprocess_image(image):
-    """Image preprocessing for OCR with blurring, CLAHE, and resizing."""
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     filtered = cv2.bilateralFilter(gray, 9, 75, 75)
     equalized = cv2.equalizeHist(filtered)
@@ -24,8 +25,8 @@ def preprocess_image(image):
     enlarged = cv2.resize(closed, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
     return enlarged
 
+# Recognize text from the image using OCR
 def recognize_passport_text(image):
-    """Recognize text from image with improved preprocessing."""
     preprocessed_image = preprocess_image(image)
     cv2.imshow("Preprocessed Image", preprocessed_image)
     cv2.waitKey(1)
@@ -34,11 +35,8 @@ def recognize_passport_text(image):
     print("EasyOCR Results:", results)
     return " ".join(results).lower()
 
+# Fuzzy matching function to compare FIO words with recognized words
 def fuzzy_match(fio_words, recognized_words, threshold=80):
-    """
-    For each word in fio_words, check if there is a matching word in recognized_words with similarity >= threshold.
-    Required matches: if more than one word, at least len(fio_words)-1 matches, otherwise one match is sufficient.
-    """
     match_count = 0
     for fio_word in fio_words:
         for rec_word in recognized_words:
@@ -48,8 +46,8 @@ def fuzzy_match(fio_words, recognized_words, threshold=80):
     required = len(fio_words) if len(fio_words) == 1 else len(fio_words) - 1
     return match_count >= required
 
+# Compare recognized text with passenger data using fuzzy matching
 def match_passenger_info(recognized_text, threshold=80):
-    """Match recognized text with passenger data using fuzzy matching."""
     recognized_words = re.findall(r'\w+', recognized_text.lower())
     for passenger in PASSENGER_DATA:
         fio_words = [word.lower() for word in passenger["FIO"] if word]
@@ -57,6 +55,7 @@ def match_passenger_info(recognized_text, threshold=80):
             return {"van": passenger["van"], "seat": passenger["seat"]}
     return None
 
+# Passport recognition class
 class PassportRecognizer:
     def __init__(self):
         self.use_gpu = True if torch.cuda.is_available() else False
@@ -75,6 +74,7 @@ class PassportRecognizer:
     def match_passenger_info(self, recognized_text, threshold=80):
         return match_passenger_info(recognized_text, threshold)
 
+    # Process the passport image
     def _process_passport(self, contents):
         import numpy as np
         image = cv2.imdecode(np.frombuffer(contents, np.uint8), cv2.IMREAD_COLOR)
@@ -102,6 +102,7 @@ class PassportRecognizer:
                 "time_elapsed": time_taken
             }
 
+    # Asynchronous method to handle passport recognition
     async def recognize(self, file):
         contents = await file.read()
         result = await asyncio.to_thread(self._process_passport, contents)

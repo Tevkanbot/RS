@@ -3,7 +3,7 @@ import asyncio
 import time
 # import multiprocessing
 
-
+from ai import ai
 from voise.voise import Voise  # Распознование и симуляция речи
 from voise.trigger import Trigger  # Распознование в речи
 # Работа с механичкской частью и кнопками у пассажиров (Queue)
